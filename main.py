@@ -21,11 +21,14 @@ async def say_hello(name: str):
 
 if __name__ == '__main__':
     try:
+        logger.info("Starting server")
+
         uvicorn.run(
             app=f'{Path(__file__).stem}:app',
             host=settings.UVICORN_HOST,
             port=settings.UVICORN_PORT,
             reload=settings.UVICORN_RELOAD,
+            log_config=settings.LOGGING
         )
     except Exception as e:
         logger.info(f'FastAPI start filed: {e}')

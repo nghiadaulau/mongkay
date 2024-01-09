@@ -5,6 +5,7 @@ from applications.core.path_conf import LOG_PATH, ROOT_DIR
 SERVER_INFO = CONFIG["server_info"]
 API_AUTHENTICATION = SERVER_INFO["api_authentication"]
 LOG_CONFIG = CONFIG["log"]
+LOG_LEVEL = CONFIG.get("log_level", "INFO")
 
 # UVICORN_* is setting for uvicorn server
 UVICORN_HOST: str = SERVER_INFO["uvicorn_host"]
@@ -30,9 +31,9 @@ LOGGING = {
         'graypy': {
             'level': 'DEBUG',
             'class': 'graypy.GELFUDPHandler',
-            'host': LOG_CONFIG.get("gray_host", "10.10.4.51"),
+            'host': LOG_CONFIG.get("gray_host", ""),
             'port': LOG_CONFIG.get("gray_port", 5555),
-            "facility": LOG_CONFIG.get("gray_facility", "poseidon")
+            "facility": LOG_CONFIG.get("gray_facility", "mongkay")
         },
         'file': {
             'level': 'DEBUG',
@@ -55,12 +56,12 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': LOG_CONFIG['main_log_handler'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'level': LOG_LEVEL,
 
         },
         'api_resp': {
             'handlers': LOG_CONFIG["api_resp_log_handler"],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'level': LOG_LEVEL,
             'propagate': False
         }
     }
