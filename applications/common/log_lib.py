@@ -2,7 +2,6 @@ import datetime
 import uuid
 import logging
 
-from applications.common.utils import IgnoreChangeDetectedFilter
 from applications.core.settings import settings
 
 
@@ -38,11 +37,9 @@ class LogMessage(object):
         :return: logger object
         """
         if isinstance(logger, (logging.Logger, logging.RootLogger)):
-            logger.addFilter(IgnoreChangeDetectedFilter())
             return logger
         else:
             logger = logging.getLogger("" if not logger else logger)
-            logger.addFilter(IgnoreChangeDetectedFilter())
             return logger
 
     @staticmethod

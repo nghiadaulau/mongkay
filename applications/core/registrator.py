@@ -1,12 +1,17 @@
-from fastapi import FastAPI
+from http.client import HTTPException
+from fastapi import Depends, FastAPI, Request
+from starlette.responses import JSONResponse
+
 from applications.core.settings import settings
+from applications.api.routers import v1
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
 
 def register_app():
     app = FastAPI()
     register_middleware(app)
-
+    register_router(app)
+    register_exception_handler(app)
     return app
 
 
@@ -39,3 +44,25 @@ def register_middleware(app: FastAPI):
         )
 
 
+def register_router(app: FastAPI):
+    """
+    :param app: FastAPI
+    :return:
+    """
+    # API
+    app.include_router(v1)
+
+
+def register_exception_handler(app: FastAPI):
+    """
+    :param app: FastAPI
+    :return:
+    """
+    app.add_exception_handler(404, not_found_error)
+
+
+def not_found_error(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code=404,
+        content={"message": "Oops! The resource you requested was not found."},
+    )
