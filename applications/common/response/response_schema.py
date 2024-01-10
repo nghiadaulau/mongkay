@@ -62,7 +62,17 @@ class ResponseBase:
             *,
             res: Union[CustomResponseCode, CustomResponse] = CustomResponseCode.HTTP_400,
             data: Any = None,
-            exclude: Union[_ExcludeData, None],
+            exclude: Union[_ExcludeData, None] = None,
+            **kwargs,
+    ) -> dict:
+        return await self.__response(res=res, data=data, exclude=exclude, **kwargs)
+
+    async def error(
+            self,
+            *,
+            res: Union[CustomResponseCode, CustomResponse] = CustomResponseCode.HTTP_500,
+            data: Any = None,
+            exclude: Union[_ExcludeData, None] = None,
             **kwargs,
     ) -> dict:
         return await self.__response(res=res, data=data, exclude=exclude, **kwargs)
