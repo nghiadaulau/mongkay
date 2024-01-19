@@ -15,6 +15,7 @@ if __name__ == '__main__':
             port=settings.UVICORN_PORT,
             reload=settings.UVICORN_RELOAD,
             log_config=settings.LOGGING,
+            access_log=False
         )
     except Exception as e:
         logger.debug(f'FastAPI start filed: {e}')

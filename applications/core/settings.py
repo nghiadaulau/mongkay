@@ -9,6 +9,9 @@ class Settings(object):
     API_AUTHENTICATION = SERVER_INFO["api_authentication"]
     LOG_CONFIG = CONFIG["log"]
     LOG_LEVEL = CONFIG.get("log_level", "INFO")
+    REDIS = CONFIG.get('redis', {})
+    ENVIRONMENT_STATE = CONFIG.get('environment', 'dev')
+    DOCS_URL = None if ENVIRONMENT_STATE == 'production' else '/swaggers'
 
     # UVICORN_* is setting for uvicorn server
     UVICORN_HOST: str = SERVER_INFO["uvicorn_host"]
@@ -76,6 +79,13 @@ class Settings(object):
     MIDDLEWARE_CORS: bool = True
     MIDDLEWARE_GZIP: bool = True
     MIDDLEWARE_ACCESS: bool = False
+
+    # Redis
+    REDIS_HOST: str = REDIS.get('host', None)
+    REDIS_PORT: int = REDIS.get('port', None)
+    REDIS_PASSWORD: str = REDIS.get('password', None)
+    REDIS_DATABASE: int = REDIS.get('db', 0)
+    REDIS_TIMEOUT: int = REDIS.get('timeout', 10)
 
 
 @lru_cache

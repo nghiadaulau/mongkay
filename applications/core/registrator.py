@@ -8,7 +8,10 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
 
 def register_app():
-    app = FastAPI()
+    app = FastAPI(
+        debug=True,
+        docs_url=settings.DOCS_URL
+    )
     register_middleware(app)
     register_router(app)
     register_exception_handler(app)
