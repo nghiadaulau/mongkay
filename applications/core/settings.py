@@ -17,6 +17,7 @@ class Settings(object):
     UVICORN_HOST: str = SERVER_INFO["uvicorn_host"]
     UVICORN_PORT: int = SERVER_INFO["uvicorn_port"]
     UVICORN_RELOAD: bool = SERVER_INFO["uvicorn_reload"]
+    DATETIME_TIMEZONE: str = SERVER_INFO['timezone']
 
     ALLOWED_HOSTS = SERVER_INFO["allow_hosts"]
 

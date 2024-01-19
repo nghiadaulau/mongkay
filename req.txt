@@ -6,3 +6,4 @@ uvicorn[standard]
 path
 graypy
 redis
+SQLAlchemy
